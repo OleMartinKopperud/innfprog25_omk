@@ -73,27 +73,30 @@
         let ak_key
         
         //Turn on or off safeguard to allow system to run
-        const safeguard = false
+        //Feil 3: Denne må være 'true' for at listen skal vises
+        const safeguard = true
         
         //Control of safeguard to create image folder name
         if(safeguard === true) {
             ak_key = secret_key + 1
         }
         const safe_images_folder = images_folder += ak_key
-        //Feil 3: En ekstra g i log
+        //Feil 4: En ekstra g i log
         console.log("Image folder: " + safe_images_folder)
 
         let HTML_employees = ""
 
         //Control of safeguard to print employee list
+        // FEIL 7: Hele HTML-blokken må være inne i én template literal (` `)
         if(safeguard === true) {
-            employees.map((e) => HTML_employees += `<article class="card">``
+            employees.map((e) => HTML_employees += `
+            <article class="card">
                     <img src="${safe_images_folder}/${e.image}.png" alt="${e.name}" />
                     <p><strong>${e.name}</strong></p>
                     <p>${e.position} | Kontor: ${e.office}</p>
                     <p>${e.email}</p>
                 </article>`)
-                //Feil 4 & 5: liten b i ById & en ekstra e i employees
+                //Feil 5: liten b i ById & en ekstra e i employees
                 document.getElementById("employee_list").innerHTML = HTML_employees
         }
 
