@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Arbeidskrav 2</h1>
+    <p>Denne nettsiden skal ha noen ulike funksjoner, som beskrevet i <a href="https://hiof.instructure.com/courses/9942/assignments/46701" target="_blank">oppgaveteksten i canvas.</a></p>
+    <h2>Problem 1</h2>
+    <p>Tilfeldig hexadesimal fargekode: <span id="random_color"></span></p>
+    <h2>Problem 2</h2>
+    <p>Finnes ordet "betingelse" i Programmeringsord-arrayen? <span id="betingelse_sjekk"></span></p>
+    <p>Finnes ordet "algoritme" i Programmeringsord-arrayen? <span id="algoritme_sjekk"></span></p>
+    <p>Finnes ordet "problemløsning" i Programmeringsord-arrayen? <span id="problemlosning_sjekk"></span></p>
+    <h2>Problem 3</h2>
+    <p>Gjennomsnittet av tallene i tall_array_en er <span id="avg_array_one"></span></p>
+    <!--vet ikke om dette er riktig, men jeg og en kompis tror det sto "avg_array_one" to ganger istedenfor one og two så gjenomsnittet blir utregnet separat-->
+    <p>Gjennomsnittet av tallene i tall_array_to er <span id="avg_array_two"></span></p>
+
+    <script>
+        //PROBLEM 1
+        const hexadecimal_characters = "ABCDEF1234567890"
+        const hexadecimal_characters_array = Array.from(hexadecimal_characters)
+        let random_color_code = "#"
+        
+        //Din kode for å løse problem 1 her.
+        //Fikk høre fra en kamerat at han klarte å gjøre dette uten og kopiere over const og let fra øverst i siden men jeg fikk ikke replikert dette med måten jeg har brukt fra nettside, derfor det er duplikat kode 
+        function generateHexCode() {
+            const hexadecimal_characters = "ABCDEF1234567890";
+            let random_color_code = "#";
+            for (let i = 0; i < 6; i++)
+                random_color_code += hexadecimal_characters[(Math.floor(Math.random() * hexadecimal_characters.length))];
+            return random_color_code;
+        }
+        document.getElementById("random_color").innerHTML = generateHexCode();
+        //PROBLEM 2
+        const programming_words = ["variabel","funksjon","array","objekt","loop","betingelse","klasse","rekursjon","algoritme","kompilator"]
+
+        //Din kode for å løse problem 2 her.
+        function checkForWord (ord) {
+            if (programming_words.includes(ord)) {
+                return "Ja";
+            } else {
+                return "Nei";
+            }
+        }
+
+        document.getElementById("betingelse_sjekk").textContent = checkForWord("betingelse");
+        document.getElementById("algoritme_sjekk").textContent = checkForWord("algoritme");
+        document.getElementById("problemlosning_sjekk").textContent = checkForWord("problemlosning");
+
+        //PROBLEM 3
+        const tall_array_en = [9, 13, 5, 62, 11, 6, 28, 31, 17]
+        const tall_array_to = [23, 76, 88, 13, 56, 90, 42]
+
+        //Din kode for å løse problem 3 her.
+
+        function gjennomsnittBeregning(tallArray) {
+            let sum = 0;
+            for (let i = 0; i < tallArray.length; i++ ) {
+                sum += tallArray[i];
+            }
+
+            const gjennomsnitt = sum / tallArray.length;
+            return gjennomsnitt;
+        }
+
+        document.getElementById("avg_array_one").textContent = gjennomsnittBeregning(tall_array_en).toFixed(2);
+        document.getElementById("avg_array_two").textContent = gjennomsnittBeregning(tall_array_to).toFixed(2);
+    </script>
+</body>
+</html>
