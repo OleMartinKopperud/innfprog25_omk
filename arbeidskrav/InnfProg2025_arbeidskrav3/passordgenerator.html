@@ -8,7 +8,16 @@
 <body>
     <h1>Passordgenerator</h1>
     <!-- Felter for brukervalg her -->
+     <p>
+        Passord Lengde: <input type="number" id="lengdeValg" value="10"><br><br>
 
+        <input type="checkbox" id="smaaBokstaver"> Små bokstaver<br>
+        <input type="checkbox" id="storeBokstaver"> Store bokstaver<br>
+        <input type="checkbox" id="tall"> Tall<br>
+        <input type="checkbox" id="symboler"> Symboler
+     </p>
+
+     <button onclick="hentValgOgKjor()">Lag passord</button>        
 
      <p>Ditt passord: <span id="generatedPassword"></span></p>
 
@@ -20,6 +29,46 @@
 
         function passwordgenerator(length, includeLowercase, includeUppercase, includeNumbers, includeSymbols) {
             /* Din kode her */
+
+            let muligeTegn = "" //tom streng vi kan bruke til å fylle inn tegnene
+
+
+            if (includeLowercase == true) { //sjekker hvilken bokser vi har huket av for
+                muligeTegn = muligeTegn + lowercase
+            }
+            if (includeUppercase == true){
+                muligeTegn = muligeTegn + uppercase
+            }
+            if (includeNumbers == true) {
+                muligeTegn = muligeTegn + numbers
+            }
+            if (includeSymbols == true) {
+                muligeTegn = muligeTegn + symbols
+            }
+
+            if (muligeTegn == "") { //varsler om brukeren ikke har valgt noe
+                return "Du må huke av minst et felt!"
+            }
+            let ferdigPassord = ""
+            for (let i = 0; i < length; i++) {
+                let tilfeldigTall = Math.floor(Math.random() * muligeTegn.length)
+
+                ferdigPassord = ferdigPassord + muligeTegn.charAt(tilfeldigTall)
+            }
+            return ferdigPassord
+        }
+
+        function hentValgOgKjor() { //henter verdiene fra HTML dokumentet og bruker dwt til generatoren
+            let valgtLengde = document.getElementById("lengdeValg").value
+
+            let vilHaSmaa = document.getElementById("smaaBokstaver").checked
+            let vilHaStore = document.getElementById("storeBokstaver").checked
+            let vilHaTall = document.getElementById("tall").checked
+            let vilHaSymboler = document.getElementById("symboler").checked
+
+            let resultat = passwordgenerator(valgtLengde, vilHaSmaa, vilHaStore, vilHaTall, vilHaSymboler) //lager resultatet
+
+            document.getElementById("generatedPassword").innerHTML = resultat //skriver ut resultatet på siden
         }
      </script>
 </body>

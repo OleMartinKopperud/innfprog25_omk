@@ -15,12 +15,20 @@
         /*
             Hva er en rekursiv funksjon?
 
-            --Ditt svar her. Husk kilder--
+            En rekursiv funksjon er en funksjon som gjentar seg selv frem til en bestemt betingelse er oppfylt.
+            Dette kan bli brukt for å generere lister, beregninger og mindre algorytmer.
         */
 
         function numberSelector() {
             // Din kode her
+            const tall = Math.floor(Math.random()*9) + 1 //velger et tilfeldig tall mellom 1 og 9
+            document.getElementById("numberList").innerHTML += "<li>" + tall + "</li>" //skriver ut I HTML
+            if (tall === 4 || tall === 7) { //Sjekker om vi skal stoppe på enten 4 eller 7
+                return
+            }
+            numberSelector()
         }
+        numberSelector()
     </script>
 </body>
 </html>

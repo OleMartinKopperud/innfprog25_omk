@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passordgenerator</title>
+    <style>
+        /* Litt enkel CSS for å holde det ryddig (Japandi-light) */
+        body { font-family: sans-serif; padding: 20px; max-width: 600px; }
+        .controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        label { display: flex; gap: 10px; align-items: center; }
+        button { padding: 10px; cursor: pointer; background-color: #333; color: #fff; border: none; }
+        #generatedPassword { font-weight: bold; font-family: monospace; font-size: 1.2em; color: #2c3e50; }
+    </style>
+</head>
+<body>
+    <h1>Passordgenerator</h1>
+    
+    <div class="controls">
+        <label>
+            Lengde på passord:
+            <input type="number" id="length" value="12" min="4" max="50">
+        </label>
+        <label>
+            <input type="checkbox" id="includeLowercase" checked> Små bokstaver (a-z)
+        </label>
+        <label>
+            <input type="checkbox" id="includeUppercase" checked> Store bokstaver (A-Z)
+        </label>
+        <label>
+            <input type="checkbox" id="includeNumbers" checked> Tall (0-9)
+        </label>
+        <label>
+            <input type="checkbox" id="includeSymbols"> Symboler (!@#...)
+        </label>
+        
+        <button onclick="hentVerdierOgLagPassord()">Generer Passord</button>
+    </div>
+
+    <p>Ditt passord: <span id="generatedPassword"></span></p>
+
+     <script>
+        const lowercase = "abcdefghijklmnopqrstuvwxyz";
+        const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const numbers = "0123456789";
+        const symbols = "!@#$%^&*()_+-=[]{}|;:',.<>?/`~";
+
+        // Oppgave 2.3: Selve logikken
+        function passwordgenerator(length, includeLowercase, includeUppercase, includeNumbers, includeSymbols) {
+            let allowedChars = "";
+            let password = "";
+
+            // 1. Bygg opp en "pool" av lovlige tegn basert på valgene
+            if (includeLowercase) {
+                allowedChars += lowercase;
+            }
+            if (includeUppercase) {
+                allowedChars += uppercase;
+            }
+            if (includeNumbers) {
+                allowedChars += numbers;
+            }
+            if (includeSymbols) {
+                allowedChars += symbols;
+            }
+
+            // 2. Sjekk at minst ett valg er tatt
+            if (allowedChars.length === 0) {
+                return "Vennligst velg minst én tegntype!";
+            }
+
+            // 3. Løkke som kjører 'length' antall ganger
+            for (let i = 0; i < length; i++) {
+                // Velg et tilfeldig tall mellom 0 og lengden på allowedChars
+                const randomIndex = Math.floor(Math.random() * allowedChars.length);
+                // Legg til tegnet i passordet
+                password += allowedChars[randomIndex];
+            }
+
+            return password;
+        }
+
+        // Hjelpefunksjon for å hente verdier fra HTML og kalle generatoren
+        function hentVerdierOgLagPassord() {
+            const len = parseInt(document.getElementById("length").value);
+            const hasLower = document.getElementById("includeLowercase").checked;
+            const hasUpper = document.getElementById("includeUppercase").checked;
+            const hasNums = document.getElementById("includeNumbers").checked;
+            const hasSyms = document.getElementById("includeSymbols").checked;
+
+            const result = passwordgenerator(len, hasLower, hasUpper, hasNums, hasSyms);
+            
+            document.getElementById("generatedPassword").textContent = result;
+        }
+     </script>
+</body>
+</html>
